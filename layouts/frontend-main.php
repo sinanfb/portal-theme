@@ -11,6 +11,7 @@ use kouosl\theme\widgets\Alert;
 use kouosl\theme\bundles\CustomAsset;
 use \kouosl\theme\Module;
 use \kouosl\site\models\Setting;
+use kouosl\menu\controllers\backend\MenuController;
 
 CustomAsset::register($this);
 
@@ -23,6 +24,7 @@ $settings = Setting::find()->asArray()->all();
 foreach ($settings as $setting){
     $settings[$setting['setting_key']] = $setting['value'];
 }
+
 
  $lang = yii::$app->session->get('lang');
 // if(!$lang)
@@ -46,6 +48,8 @@ unset($languages[$lang]);
 
 
 ?>
+
+
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
@@ -69,15 +73,12 @@ unset($languages[$lang]);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => Module::t('theme','Home'), 'url' => ['/site/home']],
-        
-    ];
-    if($settings['about'] === 'true')
-         $menuItems[] = ['label' => Module::t('theme','About'), 'url' => ['/site/auth/about']];
 
-    if($settings['contact'] === 'true')
-      $menuItems[] =  ['label' => Module::t('theme','Contact'), 'url' => ['/site/auth/contact']];
+
+  
+    $menuItems= MenuController::menubuild('anasayfa');     
+
+
     if (Yii::$app->user->isGuest) {
      
         if($settings['signup'] === 'true')
@@ -86,15 +87,15 @@ unset($languages[$lang]);
             $menuItems[] = ['label' => Module::t('theme','Login'), 'url' => ['/site/auth/login']];
     } else {
         $menuItems[] = '<li>'
-            . Html::beginForm(['/site/auth/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
+        . Html::beginForm(['/site/auth/logout'], 'post')
+        . Html::submitButton(
+            'Logout (' . Yii::$app->user->identity->username . ')',
+            ['class' => 'btn btn-link logout']
+        )
+        . Html::endForm()
+        . '</li>';
+        
     }
-    
 
     $langItems = [];
     foreach ($languages as $key => $value){
@@ -104,11 +105,16 @@ unset($languages[$lang]);
         'items' => $langItems,
     ];
 
+
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => $menuItems,
     ]);
+    
+   
     NavBar::end();
+
     ?>
 
     <div class="container">
