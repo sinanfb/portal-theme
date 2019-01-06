@@ -75,10 +75,18 @@ unset($languages[$lang]);
     ]);
 
 
-  
-    $menuItems= MenuController::menubuild('anasayfa');     
+    
 
+    $menuItems = [
+        ['label' => Module::t('theme','Home'), 'url' => ['/site/home']],
+        
+    ];
+    if($settings['about'] === 'true')
+         $menuItems[] = ['label' => Module::t('theme','About'), 'url' => ['/site/auth/about']];
 
+    if($settings['contact'] === 'true')
+      $menuItems[] =  ['label' => Module::t('theme','Contact'), 'url' => ['/site/auth/contact']];
+    
     if (Yii::$app->user->isGuest) {
      
         if($settings['signup'] === 'true')

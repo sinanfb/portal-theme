@@ -45,23 +45,20 @@ unset($languages[$lang]);
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
+
+    
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/home']],
-        ['label' => 'Sample', 'url' => ['/sample/samples/index'],
-            'items' => [
-                    ['label' => 'Create', 'url' => ['/sample/samples/create']],
-                    ['label' => 'Manage', 'url' => ['/sample/samples/index']]
-            ]
-        ],
-        ['label' => 'Menu', 'url' => ['/menu/menu/index'],
-            'items' => [
-                    ['label' => 'Create', 'url' => ['/menu/menu/create']],
-                    ['label' => 'Manage', 'url' => ['/menu/menu/index']]
-            ]
-        ],
-        ['label' => 'Settings', 'url' => ['/site/setting']],
+        ['label' => 'Anasayfa', 'url' => ['/site/home']],
+        ['label' => 'Hakkımızda', 'url' => ['/site/auth/about']],
+        ['label' => 'İletisim', 'url' => ['/site/auth/contact']],
+      
 
     ];
+
+
+
+
+
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/auth/login']];
     } else {
