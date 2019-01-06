@@ -76,7 +76,7 @@ unset($languages[$lang]);
 
 
     
-//Theme Modul
+//Tema Modulu Updated
     $menuItems = [
         ['label' => Module::t('theme','Home'), 'url' => ['/site/home']],
         
